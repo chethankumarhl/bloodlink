@@ -1,10 +1,12 @@
-body::-webkit-scrollbar {
-  display: none;
-}
 @import "tailwindcss";
 @import "tw-animate-css";
 
 @tailwind utilities;
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
 
 @custom-variant dark (&:is(.dark *));
 

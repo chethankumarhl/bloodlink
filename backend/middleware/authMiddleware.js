@@ -4,7 +4,9 @@ import User from '../models/User.js';
 
 export const protect = asyncHandler(async (req, res, next) => {
   const token = req.cookies?.jwt || req.headers.authorization?.split(' ')[1];
-console.log("Token from cookie:", token);
+
+  console.log("Token from cookie or header:", token);
+
   if (!token) {
     res.status(401);
     throw new Error('Not authorized, no token');
@@ -12,13 +14,15 @@ console.log("Token from cookie:", token);
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-// console.log("verifying", decoded);
+
+    // ✅ FIXED: Match the key used in generateToken
     req.user = await User.findById(decoded.id).select('-password');
-    // console.log("User found:", req.user);
+
     if (!req.user) {
       res.status(401);
       throw new Error('User not found');
     }
+
     next();
   } catch (err) {
     res.status(401);

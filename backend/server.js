@@ -10,7 +10,7 @@ dotenv.config();
 const app = express();
 
 // ✅ CORS Configuration - IMPORTANT
-const allowedOrigins = process.env.VITE_API_URL; // your frontend
+const allowedOrigins = [process.env.VITE_API_URL]; // your frontend
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {

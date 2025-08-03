@@ -14,7 +14,7 @@ const router = express.Router();
 
 router.post('/register', registerUser);
 router.post('/login', loginUser);
-router.get('/me', getMe);
+router.get('/me',protect, getMe);
 router.get('/userProfile/:id',getUserInfo); // ✅ Added user profile route
 // router.get('/logout', logout);
 router.get('/profile', protect, getUserProfile);

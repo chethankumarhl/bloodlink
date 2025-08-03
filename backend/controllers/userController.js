@@ -4,19 +4,15 @@ import User from '../models/User.js';
 import asyncHandler from 'express-async-handler';
 import generateToken from '../utils/generateToken.js'; // ✅ Importing token utility
 import mongoose from 'mongoose';
-export const getMe = async (req, res) => {
-  const token = req.cookies.jwt;
-  if (!token) return res.status(401).json({ message: 'Not authenticated' });
-
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await User.findById(decoded.id).select('-password');
-    if (!user) return res.status(404).json({ message: 'User not found' });
-    res.json(user);
-  } catch (err) {
-    res.status(401).json({ message: 'Invalid token' });
+//me
+export const getMe = asyncHandler(async (req, res) => {
+  if (!req.user) {
+    res.status(401);
+    throw new Error("Not authorized");
   }
-};
+  res.json(req.user); // Already fetched in protect middleware
+});
+
 // @desc    Get user profile
 // // @route   GET /api/users/profile
 // @access  Private

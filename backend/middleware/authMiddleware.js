@@ -12,7 +12,7 @@ console.log("Token from cookie:", token);
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-console.log("verifying", decoded);
+// console.log("verifying", decoded);
     req.user = await User.findById(decoded.id).select('-password');
     // console.log("User found:", req.user);
     if (!req.user) {

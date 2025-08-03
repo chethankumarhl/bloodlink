@@ -3,7 +3,7 @@
 
 # Node modules
 /node_modules
-
+/dist
 # Environment variables
 .env
 .env.local

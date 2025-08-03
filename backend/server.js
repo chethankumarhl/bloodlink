@@ -9,13 +9,20 @@ import bloodRequestRoutes from './routes/bloodRequestRoutes.js';
 dotenv.config();
 const app = express();
 
-// ✅ CORS Configuration - IMPORTANT
-const allowedOrigins = [process.env.VITE_API_URL]; // your frontend
+// ✅ Allowed Origins
+const allowedOrigins = [
+  "http://localhost:3000", // dev
+  "https://bloodlink-blush.vercel.app", // your deployed frontend
+];
+
+// ✅ CORS Configuration
 app.use(cors({
   origin: function (origin, callback) {
+    console.log("🌐 Incoming Origin:", origin);
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
+      console.log("❌ CORS Rejected:", origin);
       callback(new Error('Not allowed by CORS'));
     }
   },
@@ -24,7 +31,7 @@ app.use(cors({
 
 // ✅ Middlewares
 app.use(express.json());
-app.use(cookieParser()); // 🔑 For cookies
+app.use(cookieParser()); // 🔑 Parse cookies
 
 // ✅ Routes
 app.use('/api/users', userRoutes);

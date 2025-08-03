@@ -11,7 +11,7 @@ const app = express();
 
 // ✅ Allowed Origins
 const allowedOrigins = [
-  "http://localhost:3000", // dev
+  "http://localhost:5173", // dev
   "https://bloodlink-blush.vercel.app", // your deployed frontend
 ];
 

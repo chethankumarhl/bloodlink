@@ -29,7 +29,7 @@ const login = async (credentials) => {
     const me = await axios.get('/api/users/me', {
       withCredentials: true,
     });
-
+    console.log('User fetched from /me:', me.data);
     setUser(me.data); 
     // ✅ Use consistent key 'userInfo' instead of 'user'
     localStorage.setItem("userInfo", JSON.stringify(me.data)); // Changed from 'user' to 'userInfo'

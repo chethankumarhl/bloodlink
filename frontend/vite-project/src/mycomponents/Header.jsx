@@ -92,10 +92,10 @@ function Header() {
             
             {user ? (
               <div className="pt-3 border-t border-gray-200">
-                <div className="flex items-center mb-3 bg-gray-50 rounded-lg px-3 py-2">
+               <Link to="/profile"><div className="flex items-center mb-3 bg-gray-50 rounded-lg px-3 py-2">
                   <User className="w-4 h-4 text-gray-600 mr-2" />
                   <span className="text-gray-700 font-medium">{user.name}</span>
-                </div>
+                </div></Link> 
                 <Link to="/myrequests" onClick={() => setShowMobileMenu(false)}>
                   <p className='text-gray-700 font-medium hover:text-gray-500 py-2'>My Requests</p>
                 </Link>

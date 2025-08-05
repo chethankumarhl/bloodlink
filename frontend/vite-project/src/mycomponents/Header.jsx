@@ -46,7 +46,7 @@ function Header() {
           ) : (
             <>
               <Link to="/register">
-                <Button variant="destructive" className="mr-2">Sign in</Button>
+                <Button variant="destructive" className="mr-2">Sign Up</Button>
               </Link>
               <Link to="/login">
                 <Button variant="destructive">Log in</Button>
@@ -106,10 +106,10 @@ function Header() {
             ) : (
               <div className="pt-3 border-t border-gray-200 space-y-2">
                 <Link to="/register" onClick={() => setShowMobileMenu(false)}>
-                  <Button variant="destructive" className="w-full">Sign Up</Button>
+                  <Button variant="destructive" className="w-full mb-2">Sign Up</Button>
                 </Link>
                 <Link to="/login" onClick={() => setShowMobileMenu(false)}>
-                  <Button variant="destructive" className="w-full">Log in</Button>
+                  <Button variant="destructive" className="w-full mt-2">Log in</Button>
                 </Link>
               </div>
             )}

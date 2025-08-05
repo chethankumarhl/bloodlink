@@ -200,37 +200,37 @@ const BloodLinkChatbot = () => {
 
   if (!isOpen) {
     return (
-      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+      <div className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-50 flex flex-col items-end">
         {/* Chat with AI message bubble */}
         <div className="mb-3 relative">
-          <div className="bg-red-500 text-white rounded-lg px-4 py-2 shadow-lg animate-bounce">
-            <p className="text-sm font-medium whitespace-nowrap">
+          <div className="bg-red-500 text-white rounded-lg px-3 py-2 md:px-4 md:py-2 shadow-lg animate-bounce">
+            <p className="text-xs md:text-sm font-medium whitespace-nowrap">
               💬 Chat with AI
             </p>
           </div>
           {/* Message bubble tail/arrow pointing down-right */}
-          <div className="absolute -bottom-1 right-3 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-red-500"></div>
+          <div className="absolute -bottom-1 right-2 md:right-3 w-0 h-0 border-l-[6px] md:border-l-[8px] border-l-transparent border-r-[6px] md:border-r-[8px] border-r-transparent border-t-[6px] md:border-t-[8px] border-t-red-500"></div>
         </div>
 
         {/* Chat button */}
         <button
           onClick={() => setIsOpen(true)}
-          className="bg-red-500 hover:bg-red-600 text-white p-4 rounded-full shadow-lg transition-all duration-200 hover:scale-105"
+          className="bg-red-500 hover:bg-red-600 text-white p-3 md:p-4 rounded-full shadow-lg transition-all duration-200 hover:scale-105"
         >
-          <MessageCircle size={24} />
+          <MessageCircle size={20} className="md:w-6 md:h-6" />
         </button>
       </div>
     );
   }
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 w-96 h-[600px] bg-white border border-gray-200 rounded-lg shadow-xl flex flex-col">
+    <div className="fixed inset-0 md:inset-auto md:bottom-6 md:right-6 z-50 md:w-96 md:h-[600px] bg-white border-0 md:border border-gray-200 md:rounded-lg shadow-xl flex flex-col">
       {/* Header */}
-      <div className="bg-red-500 text-white p-4 rounded-t-lg flex items-center justify-between">
+      <div className="bg-red-500 text-white p-3 md:p-4 md:rounded-t-lg flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Bot size={20} />
+          <Bot size={18} className="md:w-5 md:h-5" />
           <div>
-            <h3 className="font-semibold">BloodLink AI Assistant</h3>
+            <h3 className="font-semibold text-sm md:text-base">BloodLink AI Assistant</h3>
             <p className="text-xs opacity-90">Ask me about blood donation</p>
           </div>
         </div>
@@ -238,24 +238,24 @@ const BloodLinkChatbot = () => {
           onClick={() => setIsOpen(false)}
           className="hover:bg-red-600 p-1 rounded transition-colors"
         >
-          <X size={18} />
+          <X size={16} className="md:w-[18px] md:h-[18px]" />
         </button>
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      <div className="flex-1 overflow-y-auto p-3 md:p-4 space-y-3 md:space-y-4">
         {messages.map((message) => (
           <div
             key={message.id}
             className={`flex ${message.isBot ? 'justify-start' : 'justify-end'}`}
           >
-            <div className={`flex items-start gap-2 max-w-[80%] ${message.isBot ? '' : 'flex-row-reverse'}`}>
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
+            <div className={`flex items-start gap-2 max-w-[85%] md:max-w-[80%] ${message.isBot ? '' : 'flex-row-reverse'}`}>
+              <div className={`w-7 h-7 md:w-8 md:h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
                 message.isBot ? 'bg-red-100 text-red-600' : 'bg-gray-100 text-gray-600'
               }`}>
-                {message.isBot ? <Bot size={16} /> : <User size={16} />}
+                {message.isBot ? <Bot size={14} className="md:w-4 md:h-4" /> : <User size={14} className="md:w-4 md:h-4" />}
               </div>
-              <div className={`p-3 rounded-lg ${
+              <div className={`p-2.5 md:p-3 rounded-lg ${
                 message.isBot
                   ? 'bg-gray-100 text-gray-800'
                   : 'bg-red-500 text-white'
@@ -275,13 +275,13 @@ const BloodLinkChatbot = () => {
 
         {isLoading && (
           <div className="flex justify-start">
-            <div className="flex items-start gap-2 max-w-[80%]">
-              <div className="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center flex-shrink-0">
-                <Bot size={16} />
+            <div className="flex items-start gap-2 max-w-[85%] md:max-w-[80%]">
+              <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center flex-shrink-0">
+                <Bot size={14} className="md:w-4 md:h-4" />
               </div>
-              <div className="bg-gray-100 p-3 rounded-lg">
+              <div className="bg-gray-100 p-2.5 md:p-3 rounded-lg">
                 <div className="flex items-center gap-2">
-                  <Loader2 size={16} className="animate-spin text-red-500" />
+                  <Loader2 size={14} className="md:w-4 md:h-4 animate-spin text-red-500" />
                   <span className="text-sm text-gray-600">Thinking...</span>
                 </div>
               </div>
@@ -292,12 +292,12 @@ const BloodLinkChatbot = () => {
       </div>
 
       {/* Input */}
-      <div className="p-4 border-t border-gray-200">
+      <div className="p-3 md:p-4 border-t border-gray-200 safe-area-bottom">
         {/* Suggested Questions */}
         {messages.length === 1 && (
-          <div className="mb-4">
+          <div className="mb-3 md:mb-4">
             <p className="text-xs font-medium text-gray-600 mb-2">💬 Try asking me:</p>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1.5 md:gap-2">
               {[
                 "Am I eligible to donate blood?",
                 "What's my blood type compatibility?",
@@ -307,7 +307,7 @@ const BloodLinkChatbot = () => {
                 <button
                   key={index}
                   onClick={() => setInputMessage(question)}
-                  className="text-xs px-3 py-2 bg-red-50 text-red-600 rounded-full hover:bg-red-100 transition-colors border border-red-200"
+                  className="text-xs px-2.5 py-1.5 md:px-3 md:py-2 bg-red-50 text-red-600 rounded-full hover:bg-red-100 transition-colors border border-red-200"
                 >
                   {question}
                 </button>
@@ -324,15 +324,15 @@ const BloodLinkChatbot = () => {
             onChange={(e) => setInputMessage(e.target.value)}
             onKeyPress={handleKeyPress}
             placeholder="Ask about blood donation..."
-            className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent text-sm"
+            className="flex-1 px-3 py-2.5 md:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent text-sm"
             disabled={isLoading}
           />
           <button
             onClick={handleSendMessage}
             disabled={isLoading || !inputMessage.trim()}
-            className="bg-red-500 hover:bg-red-600 disabled:bg-gray-300 text-white p-2 rounded-lg transition-colors"
+            className="bg-red-500 hover:bg-red-600 disabled:bg-gray-300 text-white p-2.5 md:p-2 rounded-lg transition-colors"
           >
-            <Send size={16} />
+            <Send size={14} className="md:w-4 md:h-4" />
           </button>
         </div>
         <p className="text-xs text-gray-500 mt-2">

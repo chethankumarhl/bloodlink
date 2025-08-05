@@ -13,6 +13,8 @@ const app = express();
 const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:5173',
+  'https://bloodlink-blush.vercel.app', // ✅ Your Vercel frontend
+  'https://bloodlink-2ga0.onrender.com',
   'https://bloodlink-git-main-chethankumarlingaraju-4435s-projects.vercel.app/', 
   'https://bloodlink-chethankumarlingaraju-4435s-projects.vercel.app/',// Replace with your actual frontend domain
   'https://bloodlink-blush.vercel.app/', // Replace with your actual deployed frontend URL

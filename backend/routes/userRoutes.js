@@ -23,5 +23,11 @@ router.put('/update-password', protect, updatePassword);
 // 🔐 Admin-only routes
 router.get('/', protect, isAdmin, getAllUsers);
 router.delete('/:id', protect, isAdmin, deleteUser);
-
+router.get('/test-cors', (req, res) => {
+  res.json({ 
+    message: 'CORS is working!', 
+    origin: req.get('Origin'),
+    timestamp: new Date().toISOString()
+  });
+});
 export default router;

@@ -56,29 +56,33 @@ export const loginUser = asyncHandler(async (req, res) => {
   if (user && (await user.matchPassword(password))) {
     const token = generateToken(user._id);
 
-    // ✅ FIXED: More robust cookie settings for production
+    // ✅ Production-ready cookie settings
     const cookieOptions = {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production', // Only secure in production
-      sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax', // 'None' for cross-origin in production
+      secure: process.env.NODE_ENV === 'production', // HTTPS only in production
+      sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax', // 'None' for cross-origin
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      path: '/' // Ensure cookie is available on all paths
+      path: '/' // Available on all paths
     };
 
-    console.log('Setting cookie with options:', cookieOptions);
-    console.log('Environment:', process.env.NODE_ENV);
+    console.log('🍪 Setting cookie with options:', cookieOptions);
+    console.log('🌍 Environment:', process.env.NODE_ENV);
+    console.log('🔗 Request Origin:', req.get('Origin'));
 
     res.cookie("jwt", token, cookieOptions);
 
-    // ✅ ALSO: Send token in response for backup storage
+    // ✅ Send token in response AND set cookie (belt and suspenders approach)
     res.status(200).json({
       _id: user._id,
       name: user.name,
       email: user.email,
-      token: token, // Include token in response
+      token: token, // ✅ Include token in response for header auth
       message: 'Login successful'
     });
+    
+    console.log('✅ Login successful for user:', user.email);
   } else {
+    console.log('❌ Login failed for email:', email);
     res.status(401);
     throw new Error('Invalid email or password');
   }

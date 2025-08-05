@@ -56,23 +56,34 @@ export const loginUser = asyncHandler(async (req, res) => {
   if (user && (await user.matchPassword(password))) {
     const token = generateToken(user._id);
 
-    res.cookie("jwt", token, {
+    // ✅ FIXED: More robust cookie settings for production
+    const cookieOptions = {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'Lax',
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-    });
+      secure: process.env.NODE_ENV === 'production', // Only secure in production
+      sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax', // 'None' for cross-origin in production
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      path: '/' // Ensure cookie is available on all paths
+    };
 
+    console.log('Setting cookie with options:', cookieOptions);
+    console.log('Environment:', process.env.NODE_ENV);
+
+    res.cookie("jwt", token, cookieOptions);
+
+    // ✅ ALSO: Send token in response for backup storage
     res.status(200).json({
       _id: user._id,
       name: user.name,
       email: user.email,
+      token: token, // Include token in response
+      message: 'Login successful'
     });
   } else {
     res.status(401);
     throw new Error('Invalid email or password');
   }
 });
+
 export const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 

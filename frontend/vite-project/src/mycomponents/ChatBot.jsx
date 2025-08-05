@@ -32,7 +32,7 @@ const BloodLinkChatbot = () => {
     }
   }, [isOpen]);
 
-  // Real Gemini API call
+  // Real Gemini API call with updated models
   const callGeminiAPI = async (userMessage) => {
     // Access the API key from environment variables
     const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
@@ -43,11 +43,14 @@ const BloodLinkChatbot = () => {
       throw new Error('Please set your Gemini API key in your .env file as VITE_GEMINI_API_KEY.');
     }
 
-    // Try different model endpoints in order of preference
+    // Updated model endpoints based on your available models - prioritizing the best ones
     const modelEndpoints = [
-      'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent',
-      'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent',
-      'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent'
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent',
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent',
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent',
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-002:generateContent',
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-002:generateContent',
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent'
     ];
 
     const prompt = `You are a specialized AI assistant for BloodLink, a blood donation platform in India.
@@ -62,26 +65,32 @@ const BloodLinkChatbot = () => {
 
     User question: ${userMessage}
 
-    Please provide a helpful, accurate,short response:`;
+    Please provide a helpful, accurate, short response:`;
 
-    const requestBody = {
-      contents: [{
-        parts: [{
-          text: prompt
-        }]
-      }],
-      generationConfig: {
-        temperature: 0.7,
-        topK: 40,
-        topP: 0.95,
-        maxOutputTokens: 1024,
-      }
-    };
-
-    // Try each model endpoint
+    // Try each model endpoint with appropriate configuration
     for (let i = 0; i < modelEndpoints.length; i++) {
       try {
         console.log(`Trying model endpoint ${i + 1}: ${modelEndpoints[i]}`);
+        
+        // Determine max output tokens based on model
+        let maxOutputTokens = 1024;
+        if (modelEndpoints[i].includes('2.5-pro') || modelEndpoints[i].includes('2.5-flash')) {
+          maxOutputTokens = 2048; // Higher limit for newer models
+        }
+
+        const requestBody = {
+          contents: [{
+            parts: [{
+              text: prompt
+            }]
+          }],
+          generationConfig: {
+            temperature: 0.7,
+            topK: modelEndpoints[i].includes('2.5-') ? 64 : 40, // Use higher topK for 2.5 models
+            topP: 0.95,
+            maxOutputTokens: maxOutputTokens,
+          }
+        };
         
         const response = await fetch(`${modelEndpoints[i]}?key=${GEMINI_API_KEY}`, {
           method: 'POST',

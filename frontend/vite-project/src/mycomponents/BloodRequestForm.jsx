@@ -1,5 +1,6 @@
 'use client';
 import { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ApiContext from '../context/ApiContext';
 import { Input } from '../components/ui/input';
 import { Button } from '../components/ui/button';
@@ -14,6 +15,7 @@ import {
 } from '@/components/ui/select';
 
 const BloodRequestForm = () => {
+  const navigate = useNavigate();
   const { createRequest } = useContext(ApiContext);
   const [formData, setFormData] = useState({
     bloodGroup: '',
@@ -36,7 +38,7 @@ const BloodRequestForm = () => {
     setLoading(true);
     try {
       await createRequest(formData);
-      window.location.href = '/requests'; // Full reload redirect
+       navigate('/requests'); // Full reload redirect
     } catch (err) {
       setError(err.message);
     } finally {

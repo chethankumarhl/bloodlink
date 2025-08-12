@@ -29,7 +29,7 @@ const Footer = () => {
                         </div>
                         <ul className="space-y-3">
                             <li>
-                                <Link to="/request" className="text-red-100 hover:text-white transition-colors duration-200 flex items-center space-x-2">
+                                <Link to="/requests" className="text-red-100 hover:text-white transition-colors duration-200 flex items-center space-x-2">
                                     <span>Request Blood</span>
                                 </Link>
                             </li>
